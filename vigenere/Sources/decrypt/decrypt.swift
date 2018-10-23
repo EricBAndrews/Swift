@@ -14,13 +14,7 @@ func decrypt(inKey: String, inCipher: String) {
     curKey = keyCodes[j % keyCodes.count].value
     curCipher = cipherCodes[i].value
     if (curCipher >= 0x61 && curCipher <= 0x7a) { // ensures current character is legit
-      if (curKey > curCipher) {
-        let carry: UInt32 = curKey - curCipher
-        decNum = 26 - carry
-      }
-      else {
-        decNum = (curCipher - curKey) % 26
-      }
+      decNum = ((curKey > curCipher) ? (26 - (curKey - curCipher)) : ((curCipher - curKey) % 26))
       out += String(Unicode.Scalar(decNum + 0x61) ?? Unicode.Scalar(0x2a))
       j += 1
     }
